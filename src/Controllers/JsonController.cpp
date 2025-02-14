@@ -14,4 +14,3 @@ void JsonController::getJson(
 
     callback(res);
 }
-

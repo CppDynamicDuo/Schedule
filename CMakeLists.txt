@@ -26,4 +26,8 @@ target_link_libraries(BackendTest drogon)
 
 target_include_directories(BackendTest PUBLIC include/)
 
+add_subdirectory(libraries/jsoncpp)
+
+list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules/)
+
 add_subdirectory(libraries/drogon)
