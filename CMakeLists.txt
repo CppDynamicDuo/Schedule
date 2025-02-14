@@ -28,6 +28,6 @@ target_include_directories(BackendTest PUBLIC include/)
 
 add_subdirectory(libraries/jsoncpp)
 
-list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules/)
+list(PREPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/findModules")
 
 add_subdirectory(libraries/drogon)
