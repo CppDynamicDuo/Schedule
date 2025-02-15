@@ -10,7 +10,7 @@ void TestController::greetUser(
 )
 {
     Json::Value json;
-    json["message"] = std::format("Hello, {}!", name);
+    json["message"] = std::format("Hello, {}?", name);
 
     auto res = HttpResponse::newHttpJsonResponse(json);
 
