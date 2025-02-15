@@ -1,4 +1,5 @@
 #include <Controllers/TestController.hpp>
+#include <DatabaseManager.hpp>
 
 #include <format>
 
@@ -9,6 +10,8 @@ void TestController::greetUser(
     const std::string& name
 )
 {
+    DatabaseManager::get().getDbClient()->execSqlAsyncFuture("INSERT INTO test (name) VALUES ($1);", name);
+
     Json::Value json;
     json["message"] = std::format("Hello, {}?", name);
 

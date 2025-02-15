@@ -12,6 +12,7 @@ set(
 
     src/Controllers/TestController.cpp
     src/Controllers/JsonController.cpp
+    src/DatabaseManager.cpp
 )
 
 set(CMAKE_CXX_STANDARD 20)
@@ -27,6 +28,8 @@ add_executable(
 
 target_link_libraries(BackendTest drogon)
 
-target_include_directories(BackendTest PUBLIC include/)
+include_directories(${CMAKE_SOURCE_DIR}/include/)
+
+target_include_directories(BackendTest PUBLIC ${CMAKE_SOURCE_DIR}/include/)
 
 add_subdirectory(libraries/drogon)
