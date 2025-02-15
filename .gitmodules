@@ -1,6 +1,7 @@
 [submodule "libraries/drogon"]
 	path = libraries/drogon
 	url = https://github.com/drogonframework/drogon.git
+	ignore = dirty
 [submodule "libraries/jsoncpp"]
 	path = libraries/jsoncpp
 	url = https://github.com/open-source-parsers/jsoncpp.git
