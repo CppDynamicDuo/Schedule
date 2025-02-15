@@ -1,5 +1,6 @@
 #pragma once
 #include <drogon/HttpController.h>
+#include <drogon/orm/DbClient.h>
 
 using namespace drogon;
 
