@@ -3,6 +3,14 @@ project(BackendTest)
 
 # For drogon
 set(BUILD_EXAMPLES OFF)
+set(BUILD_TESTING OFF)
+
+set(OUTPUT_DIR ${CMAKE_BINARY_DIR})
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIR} CACHE STRING "" FORCE)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIR} CACHE STRING "" FORCE)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIR} CACHE STRING "" FORCE)
+set(BUILD_SHARED_LIBS OFF CACHE STRING "" FORCE)
 
 set(
     BACKEND_SOURCE_FILES
@@ -28,6 +36,20 @@ target_include_directories(BackendTest PUBLIC include/)
 
 add_subdirectory(libraries/jsoncpp)
 
-list(PREPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/findModules")
+set(
+    JSONCPP_INCLUDE_DIRS
+
+    ${CMAKE_SOURCE_DIR}/libraries/jsoncpp/include
+)
+
+set(
+    JSONCPP_LIBRARIES
+
+    .
+    #${CMAKE_BINARY_DIR}/libjsoncpp.a
+)
 
 add_subdirectory(libraries/drogon)
+
+message("${JSONCPP_INCLUDE_DIRS}")
+message("${JSONCPP_LIBRARIES}")
