@@ -7,13 +7,7 @@ set(BUILD_TESTING OFF)
 
 set(OUTPUT_DIR ${CMAKE_BINARY_DIR})
 
-set(
-    BACKEND_SOURCE_FILES
-
-    src/Controllers/TestController.cpp
-    src/Controllers/JsonController.cpp
-    src/DatabaseManager.cpp
-)
+file(GLOB BACKEND_SOURCES "src/*.cpp" "src/*/*.cpp")
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -21,9 +15,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(
     BackendTest
 
-    main.cpp
-
-    ${BACKEND_SOURCE_FILES}
+    ${BACKEND_SOURCES}
 )
 
 target_link_libraries(BackendTest drogon)
