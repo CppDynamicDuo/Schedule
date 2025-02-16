@@ -15,10 +15,11 @@ class DatabaseManager : public Singleton<DatabaseManager>
 public:
     orm::DbClientPtr getDbClient();
 
+    // Stores needed mappers in cache and checks their existence
     template<class T>
     orm::Mapper<T>& getMapper()
     {
-        auto mapper = mappers.find(std::type_index(typeid(T)));
+        auto mapper = mappers.find(typeid(T));
         if(mapper == mappers.end())
             mappers.emplace(typeid(T), orm::Mapper<T>(dbClient));
 

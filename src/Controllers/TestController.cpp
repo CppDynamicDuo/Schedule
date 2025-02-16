@@ -6,7 +6,25 @@
 
 namespace models = drogon_model::schedule_db;
 
-void TestController::greetUser(
+void TestController::get(
+    const HttpRequestPtr& req,
+    std::function<void (const HttpResponsePtr&)>&& callback
+)
+{
+    static auto& mapper = DatabaseManager::get().getMapper<models::Test>();
+    
+    auto queryResult = mapper.findAll();
+
+    Json::Value json;
+    for(auto& i : queryResult)
+        json.append(i.toJson());
+
+    auto res = HttpResponse::newHttpJsonResponse(json);
+
+    callback(res);
+}
+
+void TestController::post(
     const HttpRequestPtr& req,
     std::function<void (const HttpResponsePtr&)>&& callback,
     
@@ -22,7 +40,7 @@ void TestController::greetUser(
     mapper.insertFuture(models::Test(insertValue));
 
     Json::Value json;
-    json["message"] = std::format("Hello, {}?", name);
+    json["message"] = std::format("Value \"{}\" was inserted (asynchronously)", name);
 
     auto res = HttpResponse::newHttpJsonResponse(json);
 
