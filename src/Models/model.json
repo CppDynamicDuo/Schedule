@@ -5,9 +5,20 @@
     "dbname": "schedule_db",
     "user": "schedule_admin",
     "passwd": "test",
-    "tables": [ "test" ],
+    "tables": [ "student", "student_task" ],
     "relationships": {
-        "enabled": false,
-        "items": []
+        "enabled": true,
+        "items": [
+            {
+                "type": "has many",
+                "original_table_name": "student",
+                "original_table_alias": "student",
+                "original_key": "id",
+                "target_table_name": "student_task",
+                "target_table_alias": "student_task",
+                "target_key": "student_id",
+                "enable_reverse": true
+            }
+        ]
     }
 }

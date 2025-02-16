@@ -1,6 +1,8 @@
 #include <Controllers/TestController.hpp>
 #include <Database/DatabaseManager.hpp>
-#include <Models/Test.hpp>
+//#include <Models/Test.hpp>
+#include <Models/Student.hpp>
+#include <Models/StudentTask.hpp>
 
 #include <format>
 
@@ -11,13 +13,17 @@ void TestController::get(
     std::function<void (const HttpResponsePtr&)>&& callback
 )
 {
-    static auto& mapper = DatabaseManager::get().getMapper<models::Test>();
+    static auto dbClient = DatabaseManager::get().getDbClient();
+    static auto& mapper = DatabaseManager::get().getMapper<models::StudentTask>();
     
     auto queryResult = mapper.findAll();
 
     Json::Value json;
     for(auto& i : queryResult)
+    {
         json.append(i.toJson());
+        json.back()["student_object"] = i.getStudent(dbClient).toJson();
+    }
 
     auto res = HttpResponse::newHttpJsonResponse(json);
 
@@ -28,21 +34,33 @@ void TestController::post(
     const HttpRequestPtr& req,
     std::function<void (const HttpResponsePtr&)>&& callback,
     
-    const std::string& name
+    const std::string& name,
+    const std::string& task
 )
 {
-    //DatabaseManager::get().getDbClient()->execSqlAsyncFuture("INSERT INTO test (name) VALUES ($1);", name);
-    static auto& mapper = DatabaseManager::get().getMapper<models::Test>();
-
-    Json::Value insertValue;
-    insertValue["name"] = name;
-
-    mapper.insertFuture(models::Test(insertValue));
+    addStudentAndTask(name, task);
 
     Json::Value json;
-    json["message"] = std::format("Value \"{}\" was inserted (asynchronously)", name);
+    json["message"] = std::format("Value \"{}\" \"{}\" was inserted (asynchronously)", name, task);
 
     auto res = HttpResponse::newHttpJsonResponse(json);
 
     callback(res);
+}
+
+void TestController::addStudentAndTask(const std::string& name, const std::string& task)
+{
+    static auto& studentMapper = DatabaseManager::get().getMapper<models::Student>();
+    static auto& taskMapper = DatabaseManager::get().getMapper<models::StudentTask>();
+
+    models::Student student;
+    student.setName(name);
+
+    studentMapper.insert(student);
+
+    models::StudentTask studentTask;
+    studentTask.setStudentId(student.getPrimaryKey());
+    studentTask.setTask(task);
+
+    taskMapper.insert(studentTask);
 }
