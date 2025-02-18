@@ -4,19 +4,18 @@
 
 using namespace drogon;
 
+using Callback = std::function<void(const HttpResponsePtr&)>;
+
 class TestController : public HttpController<TestController>
 {
 public:
     // This will return an entire database table in response
-    void get(
-        const HttpRequestPtr& req,
-        std::function<void (const HttpResponsePtr&)>&& callback
-    );
+    void get(const HttpRequestPtr& req, Callback&& callback);
     
     // This will add a named "user" and his task
     void post(
         const HttpRequestPtr& req,
-        std::function<void (const HttpResponsePtr&)>&& callback,
+        Callback&& callback,
 
         // Method arguments
         const std::string& name,

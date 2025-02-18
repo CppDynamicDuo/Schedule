@@ -2,10 +2,7 @@
 
 #include <format>
 
-void JsonController::getJson(
-    const HttpRequestPtr& req,
-    std::function<void (const HttpResponsePtr&)>&& callback
-)
+void JsonController::getJson(const HttpRequestPtr& req, Callback&& callback)
 {
     Json::Value json;
     json["message"] = std::format("Hello, {}!", (*req->getJsonObject())["name"].asString());

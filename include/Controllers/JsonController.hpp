@@ -3,13 +3,12 @@
 
 using namespace drogon;
 
+using Callback = std::function<void(const HttpResponsePtr&)>;
+
 class JsonController : public HttpController<JsonController>
 {
 public:
-    void getJson(
-        const HttpRequestPtr& req,
-        std::function<void (const HttpResponsePtr&)>&& callback
-    );
+    void getJson(const HttpRequestPtr& req, Callback&& callback);
 
     METHOD_LIST_BEGIN
 

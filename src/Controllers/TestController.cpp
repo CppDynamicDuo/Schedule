@@ -8,10 +8,7 @@
 
 namespace models = drogon_model::schedule_db;
 
-void TestController::get(
-    const HttpRequestPtr& req,
-    std::function<void (const HttpResponsePtr&)>&& callback
-)
+void TestController::get(const HttpRequestPtr& req, Callback&& callback)
 {
     static auto dbClient = DatabaseManager::get().getDbClient();
     static auto& mapper = DatabaseManager::get().getMapper<models::StudentTask>();
@@ -31,11 +28,10 @@ void TestController::get(
 }
 
 void TestController::post(
-    const HttpRequestPtr& req,
-    std::function<void (const HttpResponsePtr&)>&& callback,
-    
-    const std::string& name,
-    const std::string& task
+    const HttpRequestPtr& req, Callback&& callback,
+
+    // Method arguments
+    const std::string& name, const std::string& task
 )
 {
     addStudentAndTask(name, task);
