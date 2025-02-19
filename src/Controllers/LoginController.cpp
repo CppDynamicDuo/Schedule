@@ -71,14 +71,24 @@ void LoginController::refresh(const HttpRequestPtr& req, Callback&& callback)
     }
 }
 
-void LoginController::saveRefreshToCookie(const std::string& token, const HttpResponsePtr& resp)
+void LoginController::logout(const HttpRequestPtr& req, Callback&& callback)
+{
+    auto response = HttpResponse::newHttpResponse();
+
+    // Removing cookie
+    saveRefreshToCookie("", response, 0);
+
+    callback(response);
+}
+
+void LoginController::saveRefreshToCookie(const std::string& token, const HttpResponsePtr& resp, int maxAge)
 {
     Cookie cookie("refreshToken", token);
     cookie.setHttpOnly(true);
     cookie.setSecure(true);
     cookie.setSameSite(Cookie::SameSite::kStrict);
     cookie.setPath("/refresh");
-    cookie.setMaxAge(604800); // 7 days
+    cookie.setMaxAge(maxAge);
 
     resp->addCookie(cookie);
 }
