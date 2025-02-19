@@ -21,14 +21,12 @@ public:
         const std::string& name,
         const std::string& task
     );
-
-    //////////////////////////////
+    
 public:
     METHOD_LIST_BEGIN
 
-        // METHOD_ADD(TestController::greetUser, "/{name}", Get); // localhost:8080/TestController/{name}
-        ADD_METHOD_TO(TestController::get, "/test", Get);
-        ADD_METHOD_TO(TestController::post, "/test/{name}/{task}", Post);
+        ADD_METHOD_TO(TestController::get, "/test", Get, "JwtFilter");
+        ADD_METHOD_TO(TestController::post, "/test/{name}/{task}", Post, "JwtFilter");
 
     METHOD_LIST_END
 

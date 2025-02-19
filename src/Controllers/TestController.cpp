@@ -22,9 +22,9 @@ void TestController::get(const HttpRequestPtr& req, Callback&& callback)
         json.back()["student_object"] = i.getStudent(dbClient).toJson();
     }
 
-    auto res = HttpResponse::newHttpJsonResponse(json);
+    auto response = HttpResponse::newHttpJsonResponse(json);
 
-    callback(res);
+    callback(response);
 }
 
 void TestController::post(
@@ -39,9 +39,9 @@ void TestController::post(
     Json::Value json;
     json["message"] = std::format("Value \"{}\" \"{}\" was inserted (asynchronously)", name, task);
 
-    auto res = HttpResponse::newHttpJsonResponse(json);
+    auto response = HttpResponse::newHttpJsonResponse(json);
 
-    callback(res);
+    callback(response);
 }
 
 void TestController::addStudentAndTask(const std::string& name, const std::string& task)

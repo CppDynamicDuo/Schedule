@@ -5,6 +5,9 @@ project(BackendTest)
 set(BUILD_EXAMPLES OFF)
 set(BUILD_TESTING OFF)
 
+# For JWT
+set(JWT_BUILD_EXAMPLES OFF)
+
 set(OUTPUT_DIR ${CMAKE_BINARY_DIR})
 
 file(GLOB BACKEND_SOURCES "src/*.cpp" "src/*/*.cpp")
@@ -18,10 +21,11 @@ add_executable(
     ${BACKEND_SOURCES}
 )
 
-target_link_libraries(BackendTest drogon)
+target_link_libraries(BackendTest drogon jwt-cpp)
 
 include_directories(${CMAKE_SOURCE_DIR}/include/)
 
 target_include_directories(BackendTest PUBLIC ${CMAKE_SOURCE_DIR}/include/)
 
 add_subdirectory(libraries/drogon)
+add_subdirectory(libraries/jwt-cpp)
